@@ -106,7 +106,7 @@ class InstanceSelection:
         return ant_solutions[best_solution]
 
 
-    def run_colony(self, X, Y, X_valid, Y_valid, initial_pheromone, evaporarion_rate, Q):
+    def run_colony(self, X, Y, X_valid, Y_valid, initial_pheromone, evaporarion_rate, Q, p):
         distances = self.get_pairwise_distance(X)
         visibility_rates = self.get_visibility_rates_by_distances(distances)
         the_colony = self.create_colony(X.shape[0]) #passa a quantidade de linhas da base de dados
@@ -132,7 +132,10 @@ class InstanceSelection:
                         next_instance = choice[0]
                         probability = choice[1]
 
-                        ajk = random.randint(0, 1)
+                        ajk = 0
+                        q = random.randint(0, 100)
+                        if q < p:
+                            ajk = 1
 
                         final_probability = probability * ajk
                         if final_probability != 0:
